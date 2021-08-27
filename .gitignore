@@ -1,0 +1,15 @@
+# Local .terraform directories
+**/.terraform/*
+
+#Demo
+**/demo/**
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.bak
+.terraform.lock.hcl
+.DS_Store
+output.tf
+test.zip
