@@ -14,10 +14,28 @@ resource "oci_core_default_route_table" "spoke01_default_route_table" {
     manage_default_resource_id = oci_core_vcn.spoke01.default_route_table_id
     route_rules {
         network_entity_id = oci_core_drg.drg01.id
-        destination       = "0.0.0.0/0"
+        destination       = var.dmz_vcn_cidr_block
         destination_type  = "CIDR_BLOCK"
     }
+    route_rules {
+        network_entity_id = oci_core_drg.drg01.id
+        destination = var.spoke02_vcn_cidr_block
+        destination_type = "CIDR_BLOCK"
+    }
+    route_rules {
+        network_entity_id = oci_core_nat_gateway.spoke01_nat_gateway.id
+        destination = "0.0.0.0/0"
+        destination_type = "CIDR_BLOCK"
+    }
     #defined_tags = {"${oci_identity_tag_namespace.ArchitectureCenterTagNamespace.name}.${oci_identity_tag.ArchitectureCenterTag.name}" = var.release }
+}
+resource "oci_core_nat_gateway" "spoke01_nat_gateway" {
+
+    compartment_id = var.compartment_ocid
+    vcn_id = oci_core_vcn.spoke01.id
+
+    display_name = "vcn_spoke01"
+  
 }
 
 resource "oci_core_subnet" "spoke01_subnet_priv01" {

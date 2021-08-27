@@ -36,6 +36,7 @@ resource "oci_core_default_route_table" "dmz_default_route_table" {
         destination       = var.spoke02_vcn_cidr_block
         destination_type  = "CIDR_BLOCK"
     }
+    
     #defined_tags         = {"${oci_identity_tag_namespace.ArchitectureCenterTagNamespace.name}.${oci_identity_tag.ArchitectureCenterTag.name}" = var.release }
 }
 
